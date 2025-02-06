@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
+import javax.swing.undo.UndoManager;
 
 public class Backend {
     private static boolean saved = false;
@@ -67,5 +68,26 @@ public class Backend {
 
     public static void exitApplication() {
         System.exit(0);
+    }
+
+    public static void undo(UndoManager um) {
+        if (um.canUndo()) {
+            um.undo();
+        }
+    }
+    
+    public static void redo(UndoManager um) {
+        if (um.canRedo()) {
+            um.redo();
+        }
+    }
+    
+
+    public static void replace(JTextArea textArea) {
+        String find = JOptionPane.showInputDialog("Find..");
+        String replace = JOptionPane.showInputDialog("Replace..");
+        String fullString = textArea.getText();
+        fullString = fullString.replaceAll(find, replace);
+        textArea.setText(fullString);
     }
 }

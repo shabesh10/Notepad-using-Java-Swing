@@ -1,4 +1,8 @@
 import javax.swing.*;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
+import javax.swing.undo.UndoManager;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +20,7 @@ public class Frontend extends JFrame {
     }
 
     public void addGuiComponents() {
-        // The menubar
+    // The menubar
     JMenuBar mb = new JMenuBar();
 
     // The file menu
@@ -68,6 +72,19 @@ public class Frontend extends JFrame {
 
     //adding textarea
     JTextArea textArea = new JTextArea();
+
+    //to undo and redo
+    UndoManager um = new UndoManager();
+
+    textArea.getDocument().addUndoableEditListener(
+        new UndoableEditListener() {
+            @Override
+            public void undoableEditHappened(UndoableEditEvent e) {
+                um.addEdit(e.getEdit());
+            }
+        }
+    );
+
     JScrollPane scrollPane = new JScrollPane(textArea);
     add(scrollPane, BorderLayout.CENTER);
 
@@ -111,6 +128,27 @@ public class Frontend extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Backend.exitApplication();
+        }
+    });
+
+    undoItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Backend.undo(um);
+        }
+    });
+
+    redoItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Backend.redo(um);
+        }
+    });
+
+    replaceItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Backend.replace(textArea);
         }
     });
 
