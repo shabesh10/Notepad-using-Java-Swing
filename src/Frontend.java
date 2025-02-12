@@ -2,7 +2,6 @@ import javax.swing.*;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.undo.UndoManager;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +17,8 @@ public class Frontend extends JFrame {
         addGuiComponents();
         setMinimumSize(new Dimension(650, 400));
     }
+
+    private boolean turned_on = false; //variable for wordwrapping
 
     public void addGuiComponents() {
     // The menubar
@@ -44,9 +45,11 @@ public class Frontend extends JFrame {
     JMenu editItem = new JMenu("Edit");
     JMenuItem undoItem = new JMenuItem("Undo");
     JMenuItem redoItem = new JMenuItem("Redo");
+    JMenuItem wordWrapItem = new JMenuItem("Wordwrap:off");
     JMenuItem replaceItem = new JMenuItem("Replace...");
     editItem.add(undoItem);
     editItem.add(redoItem);
+    editItem.add(wordWrapItem);
     editItem.add(replaceItem);
 
     //creating format menu and its items
@@ -149,6 +152,28 @@ public class Frontend extends JFrame {
         @Override
         public void actionPerformed(ActionEvent e) {
             Backend.replace(textArea);
+        }
+    });
+
+    fontItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Backend.fontStyle(textArea);
+        }
+    });
+
+    fontSizeItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            Backend.fontSize(textArea);
+        }
+    });
+
+
+    wordWrapItem.addActionListener(new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            turned_on = Backend.wordWrapping(wordWrapItem, textArea, turned_on);
         }
     });
 
