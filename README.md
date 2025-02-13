@@ -1,6 +1,6 @@
 # Notepad using Java Swing
 
-This project is a simple Notepad desktop application built using java for learning purposes. It highly similiar to the usual notepad.
+This project is a simple Notepad desktop application built using java for learning purposes. It is highly similiar to the usual notepad.
 
 ## Features
 
@@ -25,9 +25,6 @@ This project is a simple Notepad desktop application built using java for learni
 
 Contributions are welcome! Please fork the repository and submit a pull request.
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE]() file for details.
 
 ## Acknowledgements
 
